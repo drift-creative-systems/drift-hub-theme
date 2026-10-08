@@ -3,12 +3,12 @@ LLM INSTRUCTIONS — Drift: Surface Hub theme (WordPress)
 For any AI assistant working on this theme. Read DESIGN.md for visual rules and MEMORY.md for decisions and open issues.
 
 PROJECT
-- Theme: Drift: Surface Hub (folder: drift-hub-theme), v1.0.0
+- Theme: Drift: Surface Hub (folder: drift-hub-theme), v1.1.0
 - Repo: https://github.com/drift-creative-systems/drift-hub-theme (public). Branches: main = released, develop = work.
 - Purpose: blank theme for the Drift: Surface Hub site. Every front-end URL goes to the hub. It lets the default themes be deleted.
 - Companion plugin: drift-hub (Drift: Surface Hub). Required. It draws the hub (/hub/ or the site root) and the login screen.
 - Agency: The Bonsai Digital Collective (Devon, UK)
-- Stack: WordPress 6.3+, PHP 8.0+. No ACF, no jQuery, no JS, no build step, no WooCommerce.
+- Stack: WordPress 6.3+, PHP 8.0+. No ACF, no jQuery, no JS, no build step, no WooCommerce. Composer only for plugin-update-checker.
 
 NAMING
 - PHP functions: drift_hub_theme_*
@@ -21,6 +21,8 @@ FILE MAP
 - style.css ....... theme header (incl. Update URI) + offline-page CSS (:root tokens --pink, --mist, --ink)
 - functions.php ... title-tag; removes generator, emoji, feed links, oEmbed discovery; wp_robots noindex; drift_hub_theme_target()
 - index.php ....... wp_safe_redirect( hub ) + exit; otherwise status 503, nocache_headers(), offline page
+- inc/updates.php . GitHub release updates (PucFactory, slug drift-hub-theme, branch main, release asset drift-hub-theme.zip). Logs and skips if vendor/ is missing.
+- vendor/ ......... Composer, committed. Don't edit; change composer.json and run composer install.
 - screenshot.png
 
 BEHAVIOUR
@@ -35,8 +37,8 @@ RELEASES
 - Bump style.css Version, add a CHANGELOG section, merge develop → main, tag vX.Y.Z.
 - git archive --format=zip --prefix=drift-hub-theme/ -o drift-hub-theme.zip vX.Y.Z
 - gh release create vX.Y.Z drift-hub-theme.zip --title "Drift: Surface Hub theme X.Y.Z"
-- .gitattributes export-ignores CLAUDE.md, MEMORY.md, llm-instructions.txt and the git files.
-- No self-updater. Sites update by uploading the new zip.
+- .gitattributes export-ignores CLAUDE.md, MEMORY.md, llm-instructions.txt, composer files and the git files. vendor/ ships in the zip.
+- Sites update through Dashboard → Updates (Plugin Update Checker, every 6 hours).
 
 DON'T
 - Don't add hub features, templates, menus or Customiser settings. They belong in the plugin.

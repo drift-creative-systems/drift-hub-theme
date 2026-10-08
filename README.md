@@ -2,7 +2,7 @@
 
 A blank classic theme for the **Drift: Surface Hub** site. Every front-end URL goes to the hub. If the Drift: Surface Hub plugin is switched off, visitors see a branded "offline for a moment" page (HTTP 503) instead of a broken site. Built by The Bonsai Digital Collective.
 
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Repo:** https://github.com/drift-creative-systems/drift-hub-theme
 - **Requires:** WordPress 6.3+, PHP 8.0+, the **Drift: Surface Hub** plugin (`drift-hub`)
 - **Text domain:** `drift-hub-theme`
@@ -16,6 +16,8 @@ No templates, no Customiser, no menus, no ACF. The hub screens and the login sty
 1. Install and activate the **Drift: Surface Hub** plugin.
 2. Download `drift-hub-theme.zip` from the [latest release](https://github.com/drift-creative-systems/drift-hub-theme/releases/latest). Upload it under Appearance → Themes → Add New → Upload and activate it. The folder must be named `drift-hub-theme`, so don't use GitHub's auto-generated "Source code" zips.
 3. Delete the default Twenty-something themes.
+
+Later versions arrive under **Dashboard → Updates** (see [Updates](#updates)).
 
 ## What it does
 
@@ -35,21 +37,27 @@ On every page the theme also:
 ```
 drift-hub-theme/
 ├── style.css        Theme header + styles for the offline page only
-├── functions.php    Head clean-up, noindex, drift_hub_theme_target()
+├── functions.php    Head clean-up, noindex, drift_hub_theme_target(), requires inc/updates.php
 ├── index.php        Redirect to the hub, or the 503 offline page
+├── inc/updates.php  GitHub release updates (Plugin Update Checker)
+├── vendor/          Composer (plugin-update-checker), committed
 ├── screenshot.png
 └── README.md, CHANGELOG.md, DESIGN.md, MEMORY.md, CLAUDE.md, llm-instructions.txt
 ```
 
 ## Development notes
 
-- **No build step and no dependencies.** Plain PHP and CSS.
+- **No build step.** Plain PHP and CSS. The only Composer dependency is the update checker.
 - The theme only talks to the plugin through `Drift_Hub_App::url()`, guarded by `class_exists()`. If the plugin changes that method, update `drift_hub_theme_target()`.
 - Keep it blank. Hub features belong in the plugin.
 
 ## Updates
 
-The theme doesn't update itself (no Plugin Update Checker). It rarely changes. To update, upload the new release zip over the old one. WordPress offers to replace the installed theme.
+The theme updates itself from GitHub releases via [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) (`inc/updates.php`). WordPress checks every 6 hours. New versions appear under **Dashboard → Updates** and install the `drift-hub-theme.zip` release asset.
+
+`vendor/` is committed, so the theme works straight from a release zip. Only run `composer install` if you change `composer.json`. If `vendor/` is missing, the theme still works but logs an error and won't update.
+
+**Sites on 1.0.0 have no updater.** Upload the 1.1.0 zip by hand once (Appearance → Themes → Add New → Upload, then "Replace current with uploaded"). After that, updates come through the Dashboard.
 
 `Update URI` in `style.css` stops WordPress matching the theme to anything on wordpress.org.
 

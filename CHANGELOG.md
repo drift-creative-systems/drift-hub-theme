@@ -3,6 +3,14 @@
 All notable changes to this theme are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [1.1.0] - 2026-10-08
+
+### Added
+- Automatic theme updates from GitHub releases (`inc/updates.php`, Plugin Update Checker 5.7 via Composer, `vendor/` committed). New versions appear under Dashboard → Updates.
+
+### Changed
+- Sites on 1.0.0 need this version uploaded by hand once. Updates come through the Dashboard after that.
+
 ## [1.0.0] - 2026-10-08
 
 First public release.

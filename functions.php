@@ -4,10 +4,14 @@
  * the hub and its login screen; this theme only exists so the site has
  * an active theme and the default ones can be removed.
  *
+ * Updates come from GitHub releases (inc/updates.php).
+ *
  * @package Drift_Hub_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
+
+require_once get_theme_file_path( 'inc/updates.php' );
 
 add_action( 'after_setup_theme', static function () {
 	add_theme_support( 'title-tag' );
