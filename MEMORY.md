@@ -5,7 +5,7 @@ Running record of decisions, state and open issues. Newest first.
 ## Current state (2026-10-08, v1.1.0)
 - v1.1.0 released: https://github.com/drift-creative-systems/drift-hub-theme/releases/tag/v1.1.0
 - Updates via GitHub releases (Plugin Update Checker 5.7). Releases are built by hand (README). No GitHub Actions.
-- Companion to the `drift-hub` plugin (Drift: Surface Hub, 0.2.0). That plugin has no GitHub repo yet, although its header points to `drift-creative-systems/drift-hub`.
+- Companion to the `drift-hub` plugin (Drift: Surface Hub): https://github.com/drift-creative-systems/drift-hub (1.0.0 released 2026-10-08, own updater).
 - Tested with the plugin at 0.1.3: with root mode off, `/` goes to `/hub/` through this theme (see the plugin's CLAUDE.md).
 - No staging or live URLs recorded. Expected live URL: https://surface.driftcreativesystems.co.uk/ (from a plugin code comment).
 
@@ -21,7 +21,7 @@ Running record of decisions, state and open issues. Newest first.
 ## Open issues / to check
 - [ ] Any site that installed 1.0.0 needs 1.1.0 uploaded by hand once (1.0.0 has no updater).
 - [ ] Confirm the update shows under Dashboard → Updates when 1.1.1+ is released.
-- [ ] Create the `drift-hub` plugin repo so its Plugin URI resolves.
+- [x] Create the `drift-hub` plugin repo so its Plugin URI resolves (2026-10-08).
 - [ ] The redirect in `index.php` is a 302 (the `wp_safe_redirect` default). Fine while the hub's location can change. Switch to 301 only once it's settled.
 - [ ] Test the offline page in a browser: plugin off, logged out, and logged in as admin.
 
