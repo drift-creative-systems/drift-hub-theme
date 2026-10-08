@@ -1,0 +1,12 @@
+# Keep dev-only files out of `git archive` release zips.
+.gitattributes export-ignore
+.gitignore export-ignore
+.github export-ignore
+CLAUDE.md export-ignore
+llm-instructions.txt export-ignore
+MEMORY.md export-ignore
+
+# Binary assets — never line-ending convert.
+*.png binary
+*.jpg binary
+*.mo binary

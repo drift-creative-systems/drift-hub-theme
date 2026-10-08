@@ -1,0 +1,46 @@
+LLM INSTRUCTIONS — Drift: Surface Hub theme (WordPress)
+========================================================
+For any AI assistant working on this theme. Read DESIGN.md for visual rules and MEMORY.md for decisions and open issues.
+
+PROJECT
+- Theme: Drift: Surface Hub (folder: drift-hub-theme), v1.0.0
+- Repo: https://github.com/drift-creative-systems/drift-hub-theme (public). Branches: main = released, develop = work.
+- Purpose: blank theme for the Drift: Surface Hub site. Every front-end URL goes to the hub. It lets the default themes be deleted.
+- Companion plugin: drift-hub (Drift: Surface Hub). Required. It draws the hub (/hub/ or the site root) and the login screen.
+- Agency: The Bonsai Digital Collective (Devon, UK)
+- Stack: WordPress 6.3+, PHP 8.0+. No ACF, no jQuery, no JS, no build step, no WooCommerce.
+
+NAMING
+- PHP functions: drift_hub_theme_*
+- Template variables: $drift_hub_*
+- CSS classes: .dht-*
+- Text domain: drift-hub-theme
+- Copy: UK English. Code: US spelling.
+
+FILE MAP
+- style.css ....... theme header (incl. Update URI) + offline-page CSS (:root tokens --pink, --mist, --ink)
+- functions.php ... title-tag; removes generator, emoji, feed links, oEmbed discovery; wp_robots noindex; drift_hub_theme_target()
+- index.php ....... wp_safe_redirect( hub ) + exit; otherwise status 503, nocache_headers(), offline page
+- screenshot.png
+
+BEHAVIOUR
+- Plugin active, /hub/ mode: index.php redirects (302) to Drift_Hub_App::url().
+- Plugin active, root mode: plugin handles template_redirect at priority 0, so the theme never renders.
+- Plugin inactive: 503 offline page; admins (activate_plugins) see a link to wp-admin/plugins.php.
+
+ESCAPING
+- URLs: esc_url(). The inline SVG mark is static markup.
+
+RELEASES
+- Bump style.css Version, add a CHANGELOG section, merge develop → main, tag vX.Y.Z.
+- git archive --format=zip --prefix=drift-hub-theme/ -o drift-hub-theme.zip vX.Y.Z
+- gh release create vX.Y.Z drift-hub-theme.zip --title "Drift: Surface Hub theme X.Y.Z"
+- .gitattributes export-ignores CLAUDE.md, MEMORY.md, llm-instructions.txt and the git files.
+- No self-updater. Sites update by uploading the new zip.
+
+DON'T
+- Don't add hub features, templates, menus or Customiser settings. They belong in the plugin.
+- Don't call plugin code without a class_exists() guard.
+- Don't remove the noindex filter.
+- Don't load web fonts or scripts on the offline page.
+- Don't rename internal identifiers (drift-hub-theme, drift_hub_theme_target).

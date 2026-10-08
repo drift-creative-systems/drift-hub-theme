@@ -1,0 +1,23 @@
+/*
+Theme Name:        Drift: Surface Hub
+Theme URI:         https://github.com/drift-creative-systems/drift-hub-theme
+Update URI:        https://github.com/drift-creative-systems/drift-hub-theme
+Description:       Blank theme for the Drift: Surface Hub site. Every front-end page goes to the hub, so there's nothing to design here; it just lets you delete the default WordPress themes. Needs the Drift: Surface Hub plugin.
+Author:            The Bonsai Digital Collective
+Author URI:        https://driftcreativesystems.co.uk/
+Version:           1.0.0
+Requires at least: 6.3
+Requires PHP:      8.0
+License:           Proprietary
+Text Domain:       drift-hub-theme
+*/
+
+/* Only used for the fallback page when the Drift: Surface Hub plugin is switched off. */
+:root { --pink: #ee4367; --mist: #e2ecf3; --ink: #000; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--ink); color: #fff; font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; display: grid; place-items: center; text-align: center; padding: 24px; box-sizing: border-box; }
+.dht-mark { width: 72px; height: auto; color: #fff; }
+.dht-name { font: 600 28px/1 Poppins, system-ui, sans-serif; letter-spacing: .16em; margin: 18px 0 6px; }
+.dht-name small { display: block; margin-top: 8px; font: 500 11px Inter, sans-serif; letter-spacing: .32em; color: #7a7f87; }
+.dht-msg { color: #c9ccd1; max-width: 32em; margin: 24px auto 0; }
+.dht-msg a { color: var(--pink); }
