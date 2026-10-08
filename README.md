@@ -2,7 +2,7 @@
 
 A blank classic theme for the **Drift: Surface Hub** site. Every front-end URL goes to the hub. If the Drift: Surface Hub plugin is switched off, visitors see a branded "offline for a moment" page (HTTP 503) instead of a broken site. Built by The Bonsai Digital Collective.
 
-- **Version:** 1.1.0
+- **Version:** 1.1.1
 - **Repo:** https://github.com/drift-creative-systems/drift-hub-theme
 - **Requires:** WordPress 6.3+, PHP 8.0+, the **Drift: Surface Hub** plugin (`drift-hub`)
 - **Text domain:** `drift-hub-theme`
@@ -10,6 +10,37 @@ A blank classic theme for the **Drift: Surface Hub** site. Every front-end URL g
 No templates, no Customiser, no menus, no ACF. The hub screens and the login styling live in the plugin. This theme exists so the site has an active theme and the default Twenty-something themes can be deleted.
 
 ---
+
+## How the four Drift: Surface repos fit together
+
+Drift: Surface is four repos, released separately. This section is the same in all four READMEs; update it in all four.
+
+| Repo | Runs on | Job |
+|---|---|---|
+| [`drift-hub`](https://github.com/drift-creative-systems/drift-hub) (plugin) | the hub site | Where content is edited. `schemas/surface.php` defines every table and field. Serves the website API (`/wp-json/drift-hub/v0/`) and sends Publish webhooks. |
+| [`drift-hub-theme`](https://github.com/drift-creative-systems/drift-hub-theme) (theme) | the hub site | Blank. Redirects the front end to the hub; 503 page if the plugin is off. |
+| [`drift-surface`](https://github.com/drift-creative-systems/drift-surface) (plugin) | each artist site | Syncs from the hub. `maps/surface.php` says which hub table/field lands in which post type, meta key or setting. Receives Publish at `/wp-json/drift-surface/v1/publish`. |
+| [`encore-theme`](https://github.com/drift-creative-systems/encore-theme) (theme, local folder `surface-theme`) | each artist site | Renders what `drift-surface` wrote: `encore_*` post types, post meta, settings. Module names are a contract with the map's `pages[].rows`. |
+
+```
+drift-hub schemas/surface.php ──API──▶ drift-surface maps/surface.php ──WP posts/meta/settings──▶ surface theme templates
+        ▲                                        │
+        └──────── Publish webhook (hub → site) ──┘
+drift-hub-theme: only cares about the hub's URL (Drift_Hub_App::url())
+```
+
+### When something changes in the hub
+
+**Adding or changing a field or table** in `drift-hub/schemas/surface.php`:
+1. **drift-hub:** add it to the schema. If it's `'hub_only' => true` (e.g. Hub Avatar), stop here: websites never see it.
+2. **drift-surface:** add the same table/field name, type and select options to `maps/surface.php`, with its `to` key (meta key or setting). Names must match exactly; **Check connection** on the Connection tab compares them.
+3. **Surface theme:** show it in the module or single template that needs it (read via `get_post_meta()` or the setting helpers). Add ACF JSON if a module gets a new option.
+4. **drift-hub-theme:** usually nothing. It only changes if the hub's URL, root mode or `Drift_Hub_App::url()` changes.
+
+**Release order:**
+- **New fields:** release the **hub first**, then drift-surface + theme. The website asks for the fields in its map (`fields[]`), and the hub answers **422** to any field name it doesn't know, so a map that runs ahead of the hub breaks that table's sync.
+- **Renames and removals:** the **website first** (stop asking for the old name), then the hub. In the hub, use `'was'` for renames; there are no migrations.
+- **Webhook or API contract changes** (path, header, response shape): release both together and say so in both CHANGELOGs (e.g. hub 1.4.0 ↔ Drift: Surface 3.0).
 
 ## Install
 

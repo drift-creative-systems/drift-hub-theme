@@ -3,6 +3,11 @@
 All notable changes to this theme are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [1.1.1] - 2026-10-08
+
+### Changed
+- README: new "How the four Drift: Surface repos fit together" section (hub plugin, this theme, the Drift: Surface website plugin and the Surface theme), with what to change where when the hub gets a new field, and the release order.
+
 ## [1.1.0] - 2026-10-08
 
 ### Added
